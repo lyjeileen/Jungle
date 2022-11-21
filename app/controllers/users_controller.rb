@@ -7,9 +7,9 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: 'User created!'
+      redirect_to root_path
     else
-      render :new
+      redirect_to new_user_path, alert: "Please fill out all the boxes and use an unregistered email address in order to register."
     end
   end 
 
