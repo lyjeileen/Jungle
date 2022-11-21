@@ -42,7 +42,9 @@
           <%# </ul>
         </li> %>
       </ul>
+
       <ul class="navbar-nav">
+        <%# display user name and logout button if user is logged in %>
         <% if current_user %>
           <li class="nav-item nav-link">
           Signed in as <%= current_user.first_name %>
