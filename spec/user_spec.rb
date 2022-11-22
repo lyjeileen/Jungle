@@ -17,16 +17,19 @@ RSpec.describe User, type: :model do
     it "is invalid if password and password_confirmation don't match" do
       subject.password="12345"
       expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("Password confirmation doesn't match Password")
     end
 
     it "is invalid if password's length is less than 4" do
       subject.password="1"
       expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("Password is too short (minimum is 4 characters)")
     end
 
     it "is invalid without an email" do
       subject.email=nil
       expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("Email can't be blank")
     end
    
     it "is invalid if the email address has been used (case insensitive)" do
@@ -42,11 +45,13 @@ RSpec.describe User, type: :model do
     it "is invalid without user's first name" do
       subject.first_name=nil
       expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("First name can't be blank")
     end
 
     it "is invalid without user's last name" do
       subject.last_name=nil
       expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("Last name can't be blank")
     end
   end
 
