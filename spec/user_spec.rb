@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
       password: "1234",
       password_confirmation: "1234")
   }
+
   describe 'Validations' do
     it "is valid with valid attributes" do
       expect(subject).to be_valid
@@ -29,11 +30,12 @@ RSpec.describe User, type: :model do
     end
    
     it "is invalid if the email address has been used (case insensitive)" do
-      user=User.new(first_name: "Amy",
+      user=User.create(first_name: "Amy",
         last_name: "Lin",
         email: "TEST@test.com",
         password: "123",
         password_confirmation: "123")
+      expect(subject).to be_valid
       expect(user).to_not be_valid
     end
 
@@ -41,10 +43,58 @@ RSpec.describe User, type: :model do
       subject.first_name=nil
       expect(subject).to_not be_valid
     end
+
     it "is invalid without user's last name" do
       subject.last_name=nil
       expect(subject).to_not be_valid
     end
+  end
 
+  describe '.authenticate_with_credentials' do
+    it "return correct user if email address and password are correct" do
+      user=User.create(first_name: "First",
+        last_name: "Last",
+        email: "t@test.com",
+        password: "1234",
+        password_confirmation: "1234")
+      expect(User.authenticate_with_credentials("t@test.com","1234")).to eq user
+    end
+
+    it "returns nil if email address is wrong" do
+      user=User.create(first_name: "First",
+        last_name: "Last",
+        email: "t@test.com",
+        password: "1234",
+        password_confirmation: "1234")
+      expect(User.authenticate_with_credentials("d@test.com","1234")).to eq nil
+    end
+
+    it "return nil if password is wrong" do
+      user=User.create(first_name: "First",
+        last_name: "Last",
+        email: "t@test.com",
+        password: "1234",
+        password_confirmation: "1234")
+      expect(User.authenticate_with_credentials("t@test.com","1234567")).to eq nil
+    end
+
+    it "return correct user if there's empty space before or after email address" do
+      user=User.create(first_name: "First",
+        last_name: "Last",
+        email: "t@test.com",
+        password: "1234",
+        password_confirmation: "1234")
+      expect(User.authenticate_with_credentials(" t@test.com ","1234")).to eq user
+    end
+
+    it "return correct user if email is in the wrong case" do
+      user=User.create(first_name: "First",
+        last_name: "Last",
+        email: "t@test.com",
+        password: "1234",
+        password_confirmation: "1234")
+      expect(User.authenticate_with_credentials("t@TEST.com","1234")).to eq user
+    end
+    
   end
 end
