@@ -20,6 +20,12 @@ RSpec.describe User, type: :model do
       expect(subject.errors.full_messages).to include ("Password confirmation doesn't match Password")
     end
 
+    it "is invalid if password and password_confirmation don't match" do
+      subject.password_confirmation="12345"
+      expect(subject).to_not be_valid
+      expect(subject.errors.full_messages).to include ("Password confirmation doesn't match Password")
+    end
+
     it "is invalid if password's length is less than 4" do
       subject.password="1"
       expect(subject).to_not be_valid
