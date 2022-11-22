@@ -5,8 +5,8 @@ RSpec.describe User, type: :model do
     User.new(first_name: "First",
       last_name: "Last",
       email: "test@test.com",
-      password: "123",
-      password_confirmation: "123")
+      password: "1234",
+      password_confirmation: "1234")
   }
   describe 'Validations' do
     it "is valid with valid attributes" do
@@ -14,7 +14,12 @@ RSpec.describe User, type: :model do
     end
 
     it "is invalid if password and password_confirmation don't match" do
-      subject.password="12"
+      subject.password="12345"
+      expect(subject).to_not be_valid
+    end
+
+    it "is invalid if password's length is less than 4" do
+      subject.password="1"
       expect(subject).to_not be_valid
     end
 
@@ -22,7 +27,7 @@ RSpec.describe User, type: :model do
       subject.email=nil
       expect(subject).to_not be_valid
     end
-   
+
     it "is invalid without user's first name" do
       subject.first_name=nil
       expect(subject).to_not be_valid
