@@ -27,6 +27,15 @@ RSpec.describe User, type: :model do
       subject.email=nil
       expect(subject).to_not be_valid
     end
+   
+    it "is invalid if the email address has been used (case insensitive)" do
+      user=User.new(first_name: "Amy",
+        last_name: "Lin",
+        email: "TEST@test.com",
+        password: "123",
+        password_confirmation: "123")
+      expect(user).to_not be_valid
+    end
 
     it "is invalid without user's first name" do
       subject.first_name=nil
