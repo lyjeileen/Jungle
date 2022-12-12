@@ -23,7 +23,7 @@ A mini e-commerce application built with Rails 6.1 for purposes of learning Rail
 - After the user places an order, the order details will be shown
 !["Order page"](https://github.com/lyjeileen/Jungle/blob/master/docs/Order%20page.png?raw=true)
 
-- Administrator can log in and add or delete products. Same can be done for adding or deleting categories of products.
+- Administrator can login and add or delete products. Same can be done for adding or deleting categories of products.
 !["Admin product page"](https://github.com/lyjeileen/Jungle/blob/master/docs/Admin%20product%20page.png?raw=true)
 
 ## Database
